@@ -24,7 +24,10 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "newsApiKey": "e891476690b7446f80dc5e10a94f4fe0"
+      "newsApiKey": "e891476690b7446f80dc5e10a94f4fe0",
+      "eas": {
+        "projectId": "7d677bb4-68be-4aa9-9ead-81e75af5aa82"
+      }
     }
   }
 }

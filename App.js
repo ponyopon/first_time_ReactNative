@@ -5,8 +5,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ArticleScreen } from "./screens/ArticleScreen";
 import ClipScreen from "./screens/ClipScreen";
 import { FontAwesome } from "@expo/vector-icons";
-import { store } from "./store";
+import { store, persistor } from "./store";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -26,37 +27,59 @@ const screenOption = ({ route }) => ({
 
 const HomeStack = () => {
   return (
-    <Provider store={store}>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Article"
-          component={ArticleScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </Provider>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Article"
+        component={ArticleScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 };
+
+const ClipStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Article"
+        component={ArticleScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 export default function App() {
   return (
-    <NavigationContainer screenOptions={screenOption}>
-      <Tab.Navigator>
-        <Tab.Screen
-          name="HomeTab"
-          component={HomeStack}
-          options={{ headerShown: false, title: "Home" }}
-        />
-        <Tab.Screen
-          name="ClipTab"
-          component={ClipScreen}
-          options={{ headerShown: false, title: "Clip" }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+
+    </PersistGate>
+
+      <NavigationContainer screenOptions={screenOption}>
+        <Tab.Navigator>
+          <Tab.Screen
+            name="HomeTab"
+            component={HomeStack}
+            options={{ headerShown: false, title: "Home" }}
+          />
+          <Tab.Screen
+            name="ClipTab"
+            component={ClipStack}
+            options={{ headerShown: false, title: "Clip" }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
